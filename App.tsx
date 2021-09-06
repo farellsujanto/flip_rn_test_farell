@@ -9,9 +9,9 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="TransactionList" component={TransactionListPage} />
-                <Stack.Screen name="TransactionDetail" component={TransactionDetailPage} />
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="transaction/list" component={TransactionListPage} />
+                <Stack.Screen name="transaction/detail" component={TransactionDetailPage} />
             </Stack.Navigator>
         </NavigationContainer>
     );
