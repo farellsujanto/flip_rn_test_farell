@@ -10,8 +10,8 @@ export default function App() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Transaction List" component={TransactionListPage} />
-                <Stack.Screen name="Transaction Detail" component={TransactionDetailPage} />
+                <Stack.Screen name="TransactionList" component={TransactionListPage} />
+                <Stack.Screen name="TransactionDetail" component={TransactionDetailPage} />
             </Stack.Navigator>
         </NavigationContainer>
     );
