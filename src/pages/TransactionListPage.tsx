@@ -3,6 +3,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState, useEffect } from 'react';
 import { FlatList, Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import FilterButton from '../components/buttons/FilterButton';
 import { TransactionCard } from '../components/cards/TransactionCard';
 import FilterModal from '../components/modals/FilterModal';
 import { Filter } from '../models/enums/filter-enum';
@@ -57,7 +58,7 @@ export default function TransactionListPage() {
 
     // Filter
     function setFilter(filter: Filter) {
-        
+
         // If filter is done, then remove search string
         setSearchString('');
         
@@ -75,10 +76,8 @@ export default function TransactionListPage() {
     return (
         <>
             <View style={styles.container}>
-
                 <SafeAreaView style={{ flex: 1, flexGrow: 1 }}>
                     <View style={styles.inputContainer}>
-
                         {
                             /* TODO: Replace image with proper icon 
                                Image from https://www.flaticon.com/
@@ -96,23 +95,8 @@ export default function TransactionListPage() {
                             onChangeText={onChangeSearchText}
                             value={searchString}
                         />
-                        <TouchableOpacity onPress={openFilterModal} style={{justifyContent:'center'}}>
-                            <View style={{ flexDirection: 'row', alignSelf: 'center'}}>
-                                <Text style={fontStyles.subText}>URUTKAN </Text>
-                                {
-                                    /* TODO: Replace image with proper icon 
-                                       Image from https://www.flaticon.com/
-                                    */
-                                }
-                                <Image
-                                    source={require('../images/down-chevron.png')}
-                                    style={styles.filterIcon}
-                                />
-                            </View>
-
-                        </TouchableOpacity>
-
-
+                        <FilterButton openFilterModal={openFilterModal} />
+                        
                     </View>
 
 
@@ -165,12 +149,6 @@ const styles = StyleSheet.create({
         width: 18,
         height: 18,
         tintColor: '#c7c7c7',
-        alignSelf: 'center',
-    },
-    filterIcon: {
-        width: 14,
-        height: 14,
-        tintColor: '#d86f4f',
         alignSelf: 'center',
     },
 });
