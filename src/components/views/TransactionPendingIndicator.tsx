@@ -13,7 +13,7 @@ export function TransactionPendingIndicator() {
                 borderColor: '#f76740',
             }}
         >
-            <Text style={[fontStyles.subText, { color: 'black' }]}>Pengecekan</Text>
+            <Text style={[fontStyles.subTextBold, { color: 'black' }]}>Pengecekan</Text>
         </View>
     );
 }

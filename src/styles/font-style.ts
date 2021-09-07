@@ -27,4 +27,9 @@ export const fontStyles = StyleSheet.create({
         fontSize: 14,
         color: '#d86f4f',
     },
+    subTextBold: {
+        fontWeight: '700',
+        fontSize: 14,
+        color: 'black',
+    },
 });
