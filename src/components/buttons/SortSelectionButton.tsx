@@ -3,10 +3,10 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { fontStyles } from '../../styles/font-style';
 import RadioButton from './RadioButton';
 
-export default function FilterSelectionButton({ onPress, text, selected }: { onPress: Function, text: string, selected: boolean }) {
+export default function SortSelectionButton({ onPress, text, selected }: { onPress: Function, text: string, selected: boolean }) {
     return (
         <TouchableOpacity
-            style={styles.filterButton}
+            style={styles.sortButton}
             onPress={() => { onPress(); }}
         >
             <RadioButton selected={selected} />
@@ -16,7 +16,7 @@ export default function FilterSelectionButton({ onPress, text, selected }: { onP
 }
 
 const styles = StyleSheet.create({
-    filterButton: {
+    sortButton: {
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',

@@ -3,14 +3,14 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState, useEffect } from 'react';
 import { FlatList, Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FilterButton from '../components/buttons/FilterButton';
+import SortButton from '../components/buttons/SortButton';
 import { TransactionCard } from '../components/cards/TransactionCard';
-import FilterModal from '../components/modals/FilterModal';
-import { Filter } from '../models/enums/filter-enum';
+import SortModal from '../components/modals/SortModal';
+import { Sort } from '../models/enums/sort-enum';
 import { Transaction } from '../models/transaction-model';
 import { getTransactions } from '../services/transaction-service';
 import { fontStyles } from '../styles/font-style';
-import { filterTransactions } from '../utils/filter';
+import { sortTransactions } from '../utils/sort';
 import { RootStackParams } from '../utils/routes';
 import { transactionSearch } from '../utils/search';
 
@@ -24,7 +24,7 @@ export default function TransactionListPage() {
     const [shownTransactions, setShownTransactions] = useState<Transaction[]>([]);
     const [searchString, setSearchString] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [filteredBy, setFilteredBy] = useState(Filter.NONE);
+    const [sortBy, setSortBy] = useState(Sort.NONE);
 
     useEffect(() => {
         // Initialize data on component load
@@ -33,7 +33,7 @@ export default function TransactionListPage() {
 
     async function initTransactionDatas() {
         const newTransactions = await getTransactions();
-        // Set static transaction
+        // Set static transaction for sort & search master data
         setTransactions([...newTransactions]);
         // Set shown transactions
         setShownTransactions([...newTransactions]);
@@ -48,26 +48,26 @@ export default function TransactionListPage() {
     }
 
     // Modal
-    function openFilterModal() {
+    function openSortModal() {
         setIsModalVisible(true);
     }
 
-    function closeFilterModal() {
+    function closeSortModal() {
         setIsModalVisible(false);
     }
 
-    // Filter
-    function setFilter(filter: Filter) {
+    // Sort
+    function setSort(sort: Sort) {
 
-        // If filter is done, then remove search string
+        // If sort is done, then remove search string
         setSearchString('');
         
         // Close modal after selection
-        closeFilterModal();
+        closeSortModal();
 
-        // Filter transactions
-        setFilteredBy(filter);
-        const newTransactions = filterTransactions(transactions, filter);
+        // Sort transactions
+        setSortBy(sort);
+        const newTransactions = sortTransactions(transactions, sort);
         // Set shown transactions
         setShownTransactions([...newTransactions]);
     }
@@ -95,8 +95,11 @@ export default function TransactionListPage() {
                             onChangeText={onChangeSearchText}
                             value={searchString}
                         />
-                        <FilterButton openFilterModal={openFilterModal} />
-                        
+                        <SortButton
+                            text={sortBy}
+                            openSortModal={openSortModal} 
+                        />
+
                     </View>
 
 
@@ -116,11 +119,11 @@ export default function TransactionListPage() {
                     {/*  */}
                 </SafeAreaView>
             </View>
-            <FilterModal
+            <SortModal
                 isVisible={isModalVisible}
-                closeModal={() => { closeFilterModal(); }}
-                filteredBy={filteredBy}
-                setFilter={setFilter}
+                closeModal={() => { closeSortModal(); }}
+                sortBy={sortBy}
+                setSort={setSort}
             />
         </>
     );

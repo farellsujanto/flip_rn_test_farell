@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import { Filter } from '../../models/enums/filter-enum';
-import FilterSelectionButton from '../buttons/FilterSelectionButton';
+import { Sort } from '../../models/enums/sort-enum';
+import SortSelectionButton from '../buttons/SortSelectionButton';
 
-export default function FilterModal({ isVisible, closeModal, filteredBy, setFilter }: { isVisible: boolean, closeModal: Function, filteredBy: Filter, setFilter: (filter: Filter) => void }) {
+export default function SortModal({ isVisible, closeModal, sortBy, setSort }: { isVisible: boolean, closeModal: Function, sortBy: Sort, setSort: (sort: Sort) => void }) {
     return (
         <Modal
             animationType='fade'
@@ -15,34 +15,34 @@ export default function FilterModal({ isVisible, closeModal, filteredBy, setFilt
                 <TouchableWithoutFeedback>
                     <View style={styles.modalContainer}>
 
-                        <FilterSelectionButton
+                        <SortSelectionButton
                             text={'URUTKAN'}
-                            selected={filteredBy === Filter.NONE}
-                            onPress={() => { setFilter(Filter.NONE); }}
+                            selected={sortBy === Sort.NONE}
+                            onPress={() => { setSort(Sort.NONE); }}
                         />
 
-                        <FilterSelectionButton
+                        <SortSelectionButton
                             text={'Nama A-Z'}
-                            selected={filteredBy === Filter.NAME_ASC}
-                            onPress={() => { setFilter(Filter.NAME_ASC); }}
+                            selected={sortBy === Sort.NAME_ASC}
+                            onPress={() => { setSort(Sort.NAME_ASC); }}
                         />
 
-                        <FilterSelectionButton
+                        <SortSelectionButton
                             text={'Nama Z-A'}
-                            selected={filteredBy === Filter.NAME_DESC}
-                            onPress={() => { setFilter(Filter.NAME_DESC); }}
+                            selected={sortBy === Sort.NAME_DESC}
+                            onPress={() => { setSort(Sort.NAME_DESC); }}
                         />
 
-                        <FilterSelectionButton
+                        <SortSelectionButton
                             text={'Tanggal Terbaru'}
-                            selected={filteredBy === Filter.DATE_DESC}
-                            onPress={() => { setFilter(Filter.DATE_DESC); }}
+                            selected={sortBy === Sort.DATE_DESC}
+                            onPress={() => { setSort(Sort.DATE_DESC); }}
                         />
 
-                        <FilterSelectionButton
+                        <SortSelectionButton
                             text={'Tanggal Terlama'}
-                            selected={filteredBy === Filter.DATE_ASC}
-                            onPress={() => { setFilter(Filter.DATE_ASC); }}
+                            selected={sortBy === Sort.DATE_ASC}
+                            onPress={() => { setSort(Sort.DATE_ASC); }}
                         />
 
 

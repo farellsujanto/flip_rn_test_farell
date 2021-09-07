@@ -1,31 +1,31 @@
-import { Filter } from "../models/enums/filter-enum";
+import { Sort } from "../models/enums/sort-enum";
 import { Transaction } from "../models/transaction-model";
 
-export function filterTransactions(transactions: Transaction[], filter: Filter): Transaction[] {
+export function sortTransactions(transactions: Transaction[], sort: Sort): Transaction[] {
 
     // Switch case might be better?
 
-    // Name Filter
-    if (filter ===  Filter.NAME_ASC) {
+    // Name Sort
+    if (sort ===  Sort.NAME_ASC) {
         let newTransactions = [...transactions];
         newTransactions.sort((a,b) => a.beneficiary_name > b.beneficiary_name ? 1: -1);
         return newTransactions;
     }
-    if (filter ===  Filter.NAME_DESC) {
+    if (sort ===  Sort.NAME_DESC) {
         let newTransactions = [...transactions];
         newTransactions.sort((a,b) => a.beneficiary_name < b.beneficiary_name ? 1: -1);
         return newTransactions;
     }
 
-    // Date Filter
+    // Date Sort
     // Oldest Date (Ascending)
-    if (filter ===  Filter.DATE_ASC) {
+    if (sort ===  Sort.DATE_ASC) {
         let newTransactions = [...transactions];
         newTransactions.sort((a,b) => a.created_at > b.created_at ? 1: -1);
         return newTransactions;
     }
     // Latest Date (Descending)
-    if (filter ===  Filter.DATE_DESC) {
+    if (sort ===  Sort.DATE_DESC) {
         let newTransactions = [...transactions];
         newTransactions.sort((a,b) => a.created_at < b.created_at ? 1: -1);
         return newTransactions;
