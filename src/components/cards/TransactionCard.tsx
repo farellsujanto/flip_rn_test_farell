@@ -1,15 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Transaction } from '../../models/transaction-model';
 import { fontStyles } from '../../styles/font-style';
+import { decodeBankName } from '../../utils/bank-name';
 import { getTransactionDate } from '../../utils/date';
 import { TransactionPendingIndicator } from '../views/TransactionPendingIndicator';
 import { TransactionSuccessIndicator } from '../views/TransactionSuccessIndicator';
+import { transactionListPageProp } from '../../pages/TransactionListPage';
 
-export function TransactionCard({ transaction }: { transaction: Transaction }) {
+export function TransactionCard({ navigation, transaction }: { navigation: transactionListPageProp,transaction: Transaction }) {
+
 
     return (
-        <View style={styles.transactionCard}>
+        <TouchableOpacity
+            style={styles.transactionCard}
+            onPress={() => {
+                navigation.navigate('TransactionDetail', transaction);
+            }}
+        >
             {
                 // TODO: Enum
                 transaction.status === 'PENDING' ?
@@ -19,10 +28,10 @@ export function TransactionCard({ transaction }: { transaction: Transaction }) {
 
             <View style={styles.transactionCardContent}>
                 <View>
-                    <Text style={fontStyles.title}>{transaction.sender_bank} ➜ {transaction.beneficiary_bank}</Text>
+                    <Text style={fontStyles.title}>{decodeBankName(transaction.sender_bank)} ➜ {decodeBankName(transaction.beneficiary_bank)}</Text>
                     <Text style={fontStyles.paragraph}>{transaction.beneficiary_name}</Text>
                     <Text style={fontStyles.paragraph}>
-                        Rp. {transaction.amount.toLocaleString('id')} • {getTransactionDate(transaction.created_at)}
+                        Rp. {Number(transaction.amount).toLocaleString('id-ID', { style: 'currency' })} • {getTransactionDate(transaction.created_at)}
                     </Text>
                 </View>
                 <View style={styles.transactionCardStatusArea}>
@@ -37,14 +46,14 @@ export function TransactionCard({ transaction }: { transaction: Transaction }) {
 
             </View>
 
-        </View>
+        </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
     transactionCard: {
         backgroundColor: '#ffffff',
-        height: 90,
+        // height: 90,
         marginVertical: 8,
         marginHorizontal: 16,
         flexDirection: 'row',
@@ -52,7 +61,7 @@ const styles = StyleSheet.create({
     },
     transactionCardContent: {
         flex: 1,
-        paddingVertical: 10,
+        paddingVertical: 12,
         paddingHorizontal: 8,
         backgroundColor: 'white',
         borderRadius: 8.0,
@@ -60,14 +69,14 @@ const styles = StyleSheet.create({
     },
     transactionIndicatorPending: {
         width: 8.0,
-        height: 90,
+        // height: 90,
         backgroundColor: '#f76740',
         borderTopLeftRadius: 8.0,
         borderBottomLeftRadius: 8.0,
     },
     transactionIndicatorSuccess: {
         width: 8.0,
-        height: 90,
+        // height: 90,
         backgroundColor: '#59b483',
         borderTopLeftRadius: 8.0,
         borderBottomLeftRadius: 8.0,

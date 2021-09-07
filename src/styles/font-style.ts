@@ -3,17 +3,17 @@ import { StyleSheet } from "react-native";
 export const fontStyles = StyleSheet.create({
     title: {
         fontWeight: '700',
-        fontSize: 16,
+        fontSize: 20,
         color: 'black',
     },
     paragraph: {
         fontWeight: '400',
-        fontSize: 14,
+        fontSize: 16,
         color: 'black',
     },
     paragraphBold: {
-        fontWeight: '600',
-        fontSize: 14,
+        fontWeight: '700',
+        fontSize: 16,
         color: 'black',
     },
 });
