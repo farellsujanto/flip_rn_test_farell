@@ -21,6 +21,7 @@ export default function TransactionDetailPage() {
     const [transaction, setTransaction] = useState<Transaction>();
 
     useEffect(() => {
+        // Set data chosen
         setTransaction(route.params);
     }, []);
 
@@ -38,7 +39,11 @@ export default function TransactionDetailPage() {
                             // TODO: Copy functionality using 'Clipboard' '@react-native-community/clipboard'
                         }}
                     >
-                        {/* TODO: Replace image with proper icon */}
+                        {
+                            /* TODO: Replace image with proper icon 
+                               Image from https://www.flaticon.com/
+                            */
+                        }
                         <Image
                             source={require('../images/copy.png')}
                             style={styles.copyIcon}
@@ -124,5 +129,6 @@ const styles = StyleSheet.create({
         width: 18,
         height: 18,
         tintColor: '#d86f4f',
+        alignSelf:'center',
     },
 });

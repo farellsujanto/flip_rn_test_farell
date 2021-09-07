@@ -1,3 +1,4 @@
+// Basic request for GET method
 export async function getRequest(url: string) {
     try {
         const data = await fetch(url, {
@@ -9,7 +10,7 @@ export async function getRequest(url: string) {
         });
         return data.json();
     } catch (e) {
-        // Handle error
+        // TODO: Handle error
         console.log(e);
     }
 

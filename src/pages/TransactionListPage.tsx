@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState, useEffect } from 'react';
-import { FlatList, StatusBar, StyleSheet, TextInput, View } from 'react-native';
+import { FlatList, Image, StatusBar, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TransactionCard } from '../components/cards/TransactionCard';
 import { Transaction } from '../models/transaction-model';
@@ -44,7 +44,20 @@ export default function TransactionListPage() {
         <View style={styles.container}>
             <SafeAreaView style={{ flex: 1, flexGrow: 1 }}>
                 <View style={styles.inputContainer}>
+
+                    {
+                        /* TODO: Replace image with proper icon 
+                           Image from https://www.flaticon.com/
+                        */
+                    }
+                    <Image
+                        source={require('../images/search.png')}
+                        style={styles.searchIcon}
+                    />
+
                     <TextInput
+                        placeholder={'Cari nama, bank, atau nominal'}
+                        placeholderTextColor="#c7c7c7" 
                         style={styles.searchInput}
                         onChangeText={onChangeSearchText}
                         value={searchString}
@@ -79,31 +92,18 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginVertical: 8,
         marginHorizontal: 16,
+        borderRadius: 6.0,
+        flexDirection: 'row',
+        paddingHorizontal: 8,
     },
     searchInput: {
-        margin: 4,
-        padding: 4,
+        margin: 2,
+        padding: 8,
     },
-    transactionCard: {
-        backgroundColor: '#ffffff',
-        height: 90,
-        marginVertical: 8,
-        marginHorizontal: 16,
-        flexDirection: 'row',
-        borderRadius: 8.0,
+    searchIcon: {
+        width: 18,
+        height: 18,
+        tintColor: '#c7c7c7',
+        alignSelf:'center',
     },
-    transactionIndicatorPending: {
-        width: 8.0,
-        height: 90,
-        backgroundColor: '#f76740',
-        borderTopLeftRadius: 8.0,
-        borderBottomLeftRadius: 8.0,
-    },
-    transactionIndicatorSuccess: {
-        width: 8.0,
-        height: 90,
-        backgroundColor: '#59b483',
-        borderTopLeftRadius: 8.0,
-        borderBottomLeftRadius: 8.0,
-    }
 });

@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     transactionCard: {
         backgroundColor: '#ffffff',
         // height: 90,
-        marginVertical: 8,
+        marginVertical: 4,
         marginHorizontal: 16,
         flexDirection: 'row',
         borderRadius: 8.0,
