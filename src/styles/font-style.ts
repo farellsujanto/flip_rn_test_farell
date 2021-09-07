@@ -11,6 +11,11 @@ export const fontStyles = StyleSheet.create({
         fontSize: 16,
         color: 'black',
     },
+    paragraphSemiBold: {
+        fontWeight: '600',
+        fontSize: 16,
+        color: 'black',
+    },
     paragraphBold: {
         fontWeight: '700',
         fontSize: 16,
