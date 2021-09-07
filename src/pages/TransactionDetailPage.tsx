@@ -7,6 +7,7 @@ import ThinDivider from '../components/dividers/ThinDivider';
 import { Transaction } from '../models/transaction-model';
 import { fontStyles } from '../styles/font-style';
 import { decodeBankName } from '../utils/bank-name';
+import { currencyFormat } from '../utils/currency';
 import { getTransactionDate } from '../utils/date';
 import { RootStackParams } from '../utils/routes';
 
@@ -76,7 +77,7 @@ export default function TransactionDetailPage() {
                         </View>
                         <View style={{ flex: 1 }}>
                             <Text style={fontStyles.paragraphBold}>NOMINAL</Text>
-                            <Text style={fontStyles.paragraph}>Rp.{transaction?.amount}</Text>
+                            <Text style={fontStyles.paragraph}>{currencyFormat(transaction?.amount ?? 0)}</Text>
                         </View>
                     </View>
 

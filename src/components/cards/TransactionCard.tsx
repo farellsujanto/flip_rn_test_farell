@@ -8,6 +8,7 @@ import { getTransactionDate } from '../../utils/date';
 import { TransactionPendingIndicator } from '../views/TransactionPendingIndicator';
 import { TransactionSuccessIndicator } from '../views/TransactionSuccessIndicator';
 import { transactionListPageProp } from '../../pages/TransactionListPage';
+import { currencyFormat } from '../../utils/currency';
 
 export function TransactionCard({ navigation, transaction }: { navigation: transactionListPageProp,transaction: Transaction }) {
 
@@ -31,7 +32,7 @@ export function TransactionCard({ navigation, transaction }: { navigation: trans
                     <Text style={fontStyles.title}>{decodeBankName(transaction.sender_bank)} ➜ {decodeBankName(transaction.beneficiary_bank)}</Text>
                     <Text style={fontStyles.paragraph}>{transaction.beneficiary_name}</Text>
                     <Text style={fontStyles.paragraph}>
-                        Rp. {Number(transaction.amount).toLocaleString('id-ID', { style: 'currency' })} • {getTransactionDate(transaction.created_at)}
+                        {currencyFormat(transaction?.amount ?? 0)} • {getTransactionDate(transaction.created_at)}
                     </Text>
                 </View>
                 <View style={styles.transactionCardStatusArea}>

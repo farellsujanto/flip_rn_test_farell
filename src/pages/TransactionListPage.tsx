@@ -102,7 +102,6 @@ export default function TransactionListPage() {
 
                     </View>
 
-
                     <FlatList
                         scrollEnabled={true}
                         data={shownTransactions}
