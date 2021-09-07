@@ -1,11 +1,15 @@
 import { useNavigation } from '@react-navigation/core';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useState, useEffect } from 'react';
-import { FlatList, Image, StatusBar, StyleSheet, TextInput, View } from 'react-native';
+import { FlatList, Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TransactionCard } from '../components/cards/TransactionCard';
+import FilterModal from '../components/modals/FilterModal';
+import { Filter } from '../models/enums/filter-enum';
 import { Transaction } from '../models/transaction-model';
 import { getTransactions } from '../services/transaction-service';
+import { fontStyles } from '../styles/font-style';
+import { filterTransactions } from '../utils/filter';
 import { RootStackParams } from '../utils/routes';
 import { transactionSearch } from '../utils/search';
 
@@ -18,6 +22,8 @@ export default function TransactionListPage() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [shownTransactions, setShownTransactions] = useState<Transaction[]>([]);
     const [searchString, setSearchString] = useState('');
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [filteredBy, setFilteredBy] = useState(Filter.NONE);
 
     useEffect(() => {
         // Initialize data on component load
@@ -40,46 +46,99 @@ export default function TransactionListPage() {
         setShownTransactions([...newTransactions]);
     }
 
+    // Modal
+    function openFilterModal() {
+        setIsModalVisible(true);
+    }
+
+    function closeFilterModal() {
+        setIsModalVisible(false);
+    }
+
+    // Filter
+    function setFilter(filter: Filter) {
+        
+        // If filter is done, then remove search string
+        setSearchString('');
+        
+        // Close modal after selection
+        closeFilterModal();
+
+        // Filter transactions
+        setFilteredBy(filter);
+        const newTransactions = filterTransactions(transactions, filter);
+        // Set shown transactions
+        setShownTransactions([...newTransactions]);
+    }
+
+
     return (
-        <View style={styles.container}>
-            <SafeAreaView style={{ flex: 1, flexGrow: 1 }}>
-                <View style={styles.inputContainer}>
+        <>
+            <View style={styles.container}>
 
-                    {
-                        /* TODO: Replace image with proper icon 
-                           Image from https://www.flaticon.com/
-                        */
-                    }
-                    <Image
-                        source={require('../images/search.png')}
-                        style={styles.searchIcon}
+                <SafeAreaView style={{ flex: 1, flexGrow: 1 }}>
+                    <View style={styles.inputContainer}>
+
+                        {
+                            /* TODO: Replace image with proper icon 
+                               Image from https://www.flaticon.com/
+                            */
+                        }
+                        <Image
+                            source={require('../images/search.png')}
+                            style={styles.searchIcon}
+                        />
+
+                        <TextInput
+                            placeholder={'Cari nama, bank, atau nominal'}
+                            placeholderTextColor="#c7c7c7"
+                            style={styles.searchInput}
+                            onChangeText={onChangeSearchText}
+                            value={searchString}
+                        />
+                        <TouchableOpacity onPress={openFilterModal} style={{justifyContent:'center'}}>
+                            <View style={{ flexDirection: 'row', alignSelf: 'center'}}>
+                                <Text style={fontStyles.subText}>URUTKAN </Text>
+                                {
+                                    /* TODO: Replace image with proper icon 
+                                       Image from https://www.flaticon.com/
+                                    */
+                                }
+                                <Image
+                                    source={require('../images/down-chevron.png')}
+                                    style={styles.filterIcon}
+                                />
+                            </View>
+
+                        </TouchableOpacity>
+
+
+                    </View>
+
+
+                    <FlatList
+                        scrollEnabled={true}
+                        data={shownTransactions}
+                        renderItem={(transaction) => {
+                            return (
+                                <TransactionCard
+                                    navigation={navigation}
+                                    transaction={transaction.item}
+                                />
+                            );
+                        }}
+                        keyExtractor={transaction => transaction.id}
                     />
-
-                    <TextInput
-                        placeholder={'Cari nama, bank, atau nominal'}
-                        placeholderTextColor="#c7c7c7" 
-                        style={styles.searchInput}
-                        onChangeText={onChangeSearchText}
-                        value={searchString}
-                    />
-                </View>
-
-
-                <FlatList
-                    scrollEnabled={true}
-                    data={shownTransactions}
-                    renderItem={(transaction) => {
-                        return (
-                            <TransactionCard
-                                navigation={navigation}
-                                transaction={transaction.item}
-                            />
-                        );
-                    }}
-                    keyExtractor={transaction => transaction.id}
-                />
-            </SafeAreaView>
-        </View>
+                    {/*  */}
+                </SafeAreaView>
+            </View>
+            <FilterModal
+                isVisible={isModalVisible}
+                closeModal={() => { closeFilterModal(); }}
+                filteredBy={filteredBy}
+                setFilter={setFilter}
+            />
+        </>
     );
 }
 
@@ -94,16 +153,24 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         borderRadius: 6.0,
         flexDirection: 'row',
-        paddingHorizontal: 8,
+        paddingHorizontal: 12,
     },
     searchInput: {
         margin: 2,
         padding: 8,
+        flex: 1,
+        fontSize: 14,
     },
     searchIcon: {
         width: 18,
         height: 18,
         tintColor: '#c7c7c7',
-        alignSelf:'center',
+        alignSelf: 'center',
+    },
+    filterIcon: {
+        width: 14,
+        height: 14,
+        tintColor: '#d86f4f',
+        alignSelf: 'center',
     },
 });

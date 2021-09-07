@@ -12,7 +12,7 @@ export function TransactionSuccessIndicator() {
                 borderRadius: 8.0,
             }}
         >
-            <Text style={[fontStyles.paragraphSemiBold, { color: 'white' }]}>Berhasil</Text>
+            <Text style={[fontStyles.subText, { color: 'white' }]}>Berhasil</Text>
         </View>
     );
 }

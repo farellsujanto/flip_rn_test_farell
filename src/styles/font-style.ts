@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 
+// TODO: Standarize font styles & family
 export const fontStyles = StyleSheet.create({
     title: {
         fontWeight: '700',
@@ -20,5 +21,10 @@ export const fontStyles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
         color: 'black',
+    },
+    subText: {
+        fontWeight: '600',
+        fontSize: 14,
+        color: '#d86f4f',
     },
 });
